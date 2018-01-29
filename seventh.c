@@ -17,11 +17,11 @@
 
 	int i,len, clen;
 	for(i = 1; i <= size; i++){	
-		strcpy(curr, argv[i]);
-		clen = strlen(curr);
-		len = strlen(res);
+		strcpy(curr, argv[i]);	//copy inout word by word
+		clen = strlen(curr);	//length of current word
+		len = strlen(res);	//lenght of result string
 		if(len != 0){
-		res[len] = curr[clen-1];	
+		res[len] = curr[clen-1];	//copy letter at the last index of current selected word
 			}else{res[0] = curr[clen-1];}
 	}
 	
