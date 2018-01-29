@@ -12,8 +12,10 @@
                 printf("error\n");
                 return 0;}
 
-		int *res = (int *)malloc(100*sizeof(int));
-                char *result = (char *)malloc(100*sizeof(char));
+		//two rerult strings one store int another one store char
+		int *res = (int *)malloc(strlen(argv[1])*sizeof(int));
+                char *result = (char *)malloc(strlen(argv[1])*sizeof(char));
+		
                 if(result==NULL){printf("error\n");return 1;}
                  int count = 1;
 
@@ -23,7 +25,7 @@
                 char *curr = (char *) malloc(100*sizeof(char));
                 if(curr==NULL){printf("error\n");return 0;}
 
-                //char curr[len];
+               
 
                 strcpy(curr,argv[1]);
                 int i;
@@ -40,17 +42,15 @@
                         count++;}
 
                         int tplen = strlen(result);
-                        if(tplen != 0){
-                        result[tplen] = curr[i];
-        	              
-					
+                        if(tplen != 0){	//store letters and count to arrays
+                        result[tplen] = curr[i];	
 			res[tplen] = count;
 
-		//  result[tplen+1] = count + '0';
+		
                 }else{result[0] = curr[i];
 
 			res[0] = count;
-                       // result[1] = count +'0';
+                       
                         }
                         count = 1;
 
@@ -60,16 +60,13 @@
 
 
 
-        int orlen = strlen(argv[1]); 
-        //sizeof(argv[1])/sizeof(char);
-        int reslen = strlen(result)*2;
-        //sizeof(result)/sizeof(result[0]);
-        //printf("%d  %d\n", reslen, orlen);
+        int orlen = strlen(argv[1]); //input length
+        int reslen = strlen(result)*2;	//result string length
 
 
         if(reslen > orlen){
 	printf("%s\n",curr);
-       // printf("%s\n", result);
+      
         }
         else{
          int v;
