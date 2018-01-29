@@ -24,7 +24,6 @@
         temp -> left = NULL;
         temp -> right = NULL;
         return temp;
-        //free(temp);
                 }
 
         static Node * insert(Node *head, int num);
@@ -36,8 +35,7 @@
          int main(int argc, char *argv[]){
 
         FILE * file = fopen(argv[1],"r");
-        //if(!file){
-        //return 1;}
+       
 
          if(file == NULL){
         printf("error\n");
@@ -58,7 +56,7 @@
         char *ch = (char *) malloc(100*sizeof(char));
         if(ch==NULL){printf("error\n");return 0;}
         char ch1[10],ch2[10],ch3[10];
-        ch1[0] = 'i';
+        ch1[0] = 'i';	//instruction: i = insert, d = delete, s = search
         ch2[0] = 's';
         ch3[0] = 'd';
         int num;
@@ -66,50 +64,33 @@
         Node *head  = NULL;
 
 
-//check inputs
-
-	int ret;
-/*
-	 do{ ret = fscanf(file, "%s\t%d", ch, &num);
-
-        if(ret == -1){break;}
-
-         if(((ch[0] != ch1[0] && ch[0] != ch2[0])&& ch[0] != ch3[0])  || ret != 2 ){
-                printf("error\n");
-                return 0;}
-
-         }while(ret != -1);
 
 
-        rewind(file);
-*/
-
+	int ret;	//check if input is in format "[char][tab][int]"
 
 
         do{ ret = fscanf(file, "%s\t%d", ch, &num);
 
 	if(ret == -1){break;}
 
-        //printf("ch is |%c| & num is |%d|\n",ch[0],num);
+        
 
                 if((ch[0] != ch1[0] && ch[0] != ch2[0] && ch[0] != ch3[0]) || ret != 2){
                 printf("error\n");
                 return 0;}
 
-
                 if(ch[0] == ch1[0]){
-                //Node *tmp = newNode(num);
+                
                 head = insert(head, num);
-                //printf("head is |%d|\n", head->data);
         }
 
                 if(ch[0] == ch2[0]){
-                //Node *tmp2  = newNode(atoi(num)); 
+                
                 search(head, num);
                         }
 
                 if(ch[0] == ch3[0]){
-                        //printf("head = %d, num  = %d\n",head->data,num);
+                        
                         head = delete(head, num);
                         }
 
@@ -122,6 +103,7 @@
         return 0;
         }
 
+//free the BST
 Node*freeNode(Node* node){
        if(node->left == NULL && node->right==NULL){
               free(node);
@@ -138,7 +120,6 @@ return node->right;
                 Node *tmp = newNode(num);
                 if(head == NULL){
                 head = tmp;
-                //h = height(head);
                 printf("inserted %d\n", 1);
                 return head; }
 
@@ -168,7 +149,6 @@ return node->right;
 
 
                 if(num < prv -> data){
-                //printf("here\n");
                         prv -> left = tmp;
                         h = height(head,num);
                         printf("inserted %d\n", h);
@@ -185,7 +165,6 @@ return node->right;
 
 
         void search( Node *head,int num){
-        //if(head!=NULL){printf("head is = %d\n",head->data);}
                 int h = 0;
                 Node *tmp = head;
 
@@ -201,7 +180,6 @@ return node->right;
                                 tmp = tmp -> right;}
                 }
 
-        //h = height(head);
         printf("absent\n");
 
                 }
@@ -211,15 +189,7 @@ return node->right;
                 if(head == NULL){
                 return 0;}
 
-/*
-                Node * tmp = head;
-                int hleft = height(tmp -> left);
-                int hright = height(tmp ->right);
 
-                if(hleft > hright){
-                        return hleft + 1;}else
-                return hright + 1;
-*/
                 Node *tmp = head;
                 int count = 1;
                 while(tmp != NULL){
@@ -276,52 +246,22 @@ return node->right;
                                 prv = hold;
                                 hold = hold-> left;}
                         head -> data = hold -> data;
-                        //tmp = hold;
+                       
                         }
 
 
 
                 head->right = delete(head->right,hold->data);
-                //printf("success\n");
+               
                 return head;
-
-
-
-
-/*
-                //two + children
-                         if(tmp -> left == NULL && tmp -> right == NULL){
-                        if(tmp == prv -> left){
-                                prv -> left = NULL;
-                                printf("success\n");
-                                return head;}
-                        else{prv -> right = NULL;
-                                 printf("success\n");
-                                return head;}
-                        }
-
-                //one child
-                if(tmp -> right != NULL && tmp -> left == NULL){
-                if(tmp == prv -> left){
-                prv -> left = tmp -> right;}else{
-                prv -> right = tmp -> right;}
-                printf("success\n");
-                return head;}
-
-                 if(tmp -> left != NULL && tmp -> right == NULL){
-                if(tmp == prv->left){
-                prv -> left = tmp -> left;}else{
-                prv -> right = tmp->left;}
-                printf("success\n");
-                return head;}
-*/
 
                 }
 
+		
 
 
                 while(tmp != NULL){
-                        if(tmp -> data==num){
+                        if(tmp -> data==num){	//find the correct node
                                 break;}
                         prv = tmp;
                         if(num < tmp -> data){
