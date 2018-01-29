@@ -55,10 +55,9 @@ int main(int argc, char*argv[]){
 			train[a][b] = str[c];
 			c++;
 
-		//printf("%f\t",train[a][b]);
 
 		}
-	//printf("here\n"); 
+	
 }
 
 	/* for equation 'x*w = y', separate train to 'x' and 'y' */
@@ -66,24 +65,15 @@ int main(int argc, char*argv[]){
  
 	double **x = (double**)malloc(row*sizeof(double*));
          for(a = 0; a < row; a++){
-                x[a] = (double*)malloc((col)*sizeof(double));}				//x = [row][col];
+                x[a] = (double*)malloc((col)*sizeof(double));}		//x = [row][col];
  
 
 
-	double *y = (double*)malloc(row*10*sizeof( double));					//y = [row];
-/*
-	 for(a = 0; a < 10* row; a++){
-                y[a] = (float)malloc(col*sizeof(y[a]));}
+	double *y = (double*)malloc(row*10*sizeof( double));		//y = [row];
 
-*/
 
 
 	// for x
-
-//printf("X for train :\n");
-	
-
-
 
 	for(a = 0; a < row;a++){
 
@@ -95,109 +85,63 @@ int main(int argc, char*argv[]){
 			
 			x[a][b] = train[a][c];
 			
-	//	printf("%lf\t",x[a][b]);
+	
 		}
-	//printf("\n");
+	
 	}
-//printf("\n");
-/*
-for(a = 0; a < row; a++){     
-                for(b = 0; b < col;b++){ 
-printf("%lf\t",x[a][b]);
-}printf("\n");}
-*/
 
-
-//printf("Y for train :\n");
-
-	//for y
-//printf("row = %d, col = %d\n",row,col);
 
 	for(a = 0,b = col-1; a < row; a++){
 		y[a] = train[a][b];
-//	printf("%lf\t",y[a]);
+
 	}
-//	printf("\n");
-//printf("\n");
-
-//printf("herer\n");
-
-
-
-
 	//start math : W = (X^T * X)^-1 * X^T * Y
 
 
 	// for (X^T)
 
-	double **xt = (double **)malloc((col)*sizeof(double*));				//[col][row]; 	
+	double **xt = (double **)malloc((col)*sizeof(double*));		//[col][row]; 	
 
 	for(a = 0; a < col; a++){
                 xt[a] = (double*)malloc(row*sizeof(double));
 }	
 
 	transpose((double**)x,(double**)xt,row,col);
-/*
-printf("transpose:\n");
-for(a= 0; a < col-1;a++){  
-for(b=0; b < row; b++){printf("%lf\t",xt[a][b]);}printf("\n");}  
-printf("\n");
-*/
+
 
 	// for (X^T * X)
 
-        double **multi = (double **)malloc((col)*sizeof(double*)); 				//[col][col];
+        double **multi = (double **)malloc((col)*sizeof(double*)); 	//[col][col];
 	for(a = 0; a < col; a++){
                 multi[a] = (double*)malloc((col)*sizeof(double));}
 
 	multiply((double**)xt,(double**)x,(double **)multi,col,row,row,col);
-/*
-printf("X^T * X: \n");
-for(a= 0; a < col-1;a++){  
-for(b=0; b < col-1; b++){printf("%lf\t",multi[a][b]);}printf("\n");}  
-printf("\n");
-*/
+
 	// for (X^T * X)^-1
 
-	double **inv = (double **)malloc((col)*sizeof(double*)); 				//[col][col];
+	double **inv = (double **)malloc((col)*sizeof(double*)); 	//[col][col];
 	for(a = 0; a < col; a++){
                 inv[a] = (double*)malloc((col)*sizeof(double));}
 
 	inverse((double**)multi,(double **)inv, col,col);
-/*
-printf("inverse : \n");	
-for(a= 0; a < col-1;a++){         
-for(b=0; b < col-1; b++){printf("%lf\t",inv[a][b]);}printf("\n");}
-printf("\n");
-*/
+
 
 	// for (X^T * X)^-1 * X^T
 
-	double **mul2 = (double **)malloc((col)*sizeof(double*));		 		//[col][row];
+	double **mul2 = (double **)malloc((col)*sizeof(double*));	//[col][row];
 	for(a = 0; a < col; a++){
                 mul2[a] = (double*)malloc(row*sizeof(double));}
 
 	multiply((double**)inv,(double**)xt,(double **)mul2, col,col,col,row);
-/*	
-printf("(X^T * X)^-1 * X^T :\n");
-for(a= 0; a < col-1;a++){
-for(b=0; b < row; b++){printf("%lf\t",mul2[a][b]);}printf("\n");}
-printf("\n");
-*/
+
 
 	// for (X^T * X)^-1 * X^T * Y
 	
 	double *w = (double *)malloc(row*10*sizeof(double)); 					//[col]; 
 
-/*	for(a = 0; a < 10* row; a++){
-                w[a] = (float*)malloc(col*sizeof(w[a]));}
-*/
+
 	mxv((double**)mul2,(double*)y,(double *)w, col,row);
-/*
-printf("W :\n");
-for(b=0; b < col-1; b++){printf("%lf\t",w[b]);}printf("\n");
-printf("\n");
-*/
+
 
 
 	/* store test data */
@@ -236,23 +180,9 @@ printf("\n");
 		for(b = 1; b < col2+1;b++){
 			test[a][b] = str2[c];
 			c++;
-		//printf("test = %f\t",test[a][b]);
+		
 		}
-	}//printf("\n");
-/*
-printf("test\n");
-for(a = 0; a < row2; a++){     
-                for(b = 0; b < col2+1;b++){ 
-printf("%lf\t",test[a][b]);
-}printf("\n");}
-*/
-/*
-	printf("X : \n");
-for(a= 0; a < row2;a++){
-for(b=0; b < col2; b++){printf("%lf\t",test[a][b]);}printf("\n");}
-printf("\n");
-
-*/
+	}
 
 
 	double *final = (double *)malloc(row2*10*sizeof(double));		 		//[row2];
@@ -262,7 +192,6 @@ printf("\n");
 	mxv((double**)test,(double*)w, (double *)final, row2,col2+1);
 
 
-//printf("final: \n");
 
 	//print final result
 
@@ -325,7 +254,7 @@ void mxv(double **arr, double *vec, double * w, int r, int c){
 		}
 	}
 
-	//return w;
+	
 
 }//finish mxv
 
@@ -339,7 +268,7 @@ void mxv(double **arr, double *vec, double * w, int r, int c){
 
 void transpose(double **arr, double **xt, int row, int col){
 
-	//float arr2[col][row];
+	
 
 	int i,j;
 	for(i = 0; i < row; i ++){
@@ -349,7 +278,7 @@ void transpose(double **arr, double **xt, int row, int col){
 		}
 	}
 
-	//return  (float**)arr2;
+	
 
 }//finish transpose
 
@@ -361,11 +290,11 @@ void transpose(double **arr, double **xt, int row, int col){
 
 void inverse( double **arr, double **result, int row, int col){
 
-	//float result[row][col];
+	
 	double arr2[row][col*2];
 	int i,j;
 
-//int iz,jz;
+
 
 
 	//set all entries to 0
@@ -445,9 +374,9 @@ void inverse( double **arr, double **result, int row, int col){
 
 			if(k != i){
 				if(fabs(arr2[k][j] - 0) > 0.000000001){
-					//  
+					
 					mul = arr2[k][j];
-					//
+					
 					for(z = j; z < col*2;z++){
 
 						arr2[k][z] = arr2[k][z] - mul*arr2[i][z];
@@ -476,7 +405,7 @@ void inverse( double **arr, double **result, int row, int col){
 
 
 
-	//return result;
+	
 
 }//finish inverse
 
@@ -487,7 +416,7 @@ void inverse( double **arr, double **result, int row, int col){
 
 void multiply(double **arr,double **arr2,double **arr3, int r1,int c1,int r2,int c2){
 
-	//float arr3[r1][c2];
+	
 	int i, j, k;
 
 
@@ -502,7 +431,7 @@ void multiply(double **arr,double **arr2,double **arr3, int r1,int c1,int r2,int
 		}
 	}
 
-	//return arr3;
+	
 
 }//finish multiply
 
