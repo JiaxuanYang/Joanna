@@ -35,7 +35,6 @@ static Node* delete(Node *head, int data);
 	}
 	// check if file does exist
 
-
 	fseek(file,0,SEEK_END);
 	int size = ftell(file);
 	if (size == 0){
